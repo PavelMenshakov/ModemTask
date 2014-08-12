@@ -22,7 +22,35 @@ function focus_st(e,id) {
 
 }
 
+function valDate(e) {
+    re = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
+
+    if (e.value != '') {
+        if (regs = e.value.match(re)) {
+            if (regs[3] < 1 ||regs[3] > 31) {
+                return false;
+            }
+            if (regs[2] < 1 || regs[2] > 12) {
+                return false;
+            }
+
+            if (regs[1] < 1900 || regs[1] > (new Date()).getFullYear()) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
+
+
 function saveData(id) {
+    if (document.getElementsByName("fname")[0].value.length == 0) { document.getElementById("valmf").style.visibility = "visible"; return; };
+    if (document.getElementsByName("lname")[0].value.length == 0) { document.getElementById("valml").style.visibility = "visible"; return; };
+    if (document.getElementsByName("sname")[0].value.length == 0) { document.getElementById("valms").style.visibility = "visible"; return; };
+    if (!valDate(document.getElementsByName("bday")[0])) { document.getElementById("valmd").style.visibility = "visible"; return; };
+    if (!valDate(document.getElementsByName("incomday")[0])) { document.getElementById("valmi").style.visibility = "visible"; return; };
     if (document.getElementById("male").checked) var sex = true;
     else var sex = false;
     $.post("/api/default1", {
@@ -34,10 +62,15 @@ function saveData(id) {
         "BDate": document.getElementsByName("bday")[0].value,
         "IncomDate": document.getElementsByName("incomday")[0].value
     },
-    setTimeout(function () { location.reload() }, 3000))
+    setTimeout(function () { location.reload() }, 1000))
 }
 
 function insertData() {
+    if (document.getElementsByName("fname")[0].value.length == 0) { document.getElementById("valmf").style.visibility = "visible"; return; };
+    if (document.getElementsByName("lname")[0].value.length == 0) { document.getElementById("valml").style.visibility = "visible"; return; };
+    if (document.getElementsByName("sname")[0].value.length == 0) { document.getElementById("valms").style.visibility = "visible"; return; };
+    if (!valDate(document.getElementsByName("bday")[0])) { document.getElementById("valmd").style.visibility = "visible"; return; };
+    if (!valDate(document.getElementsByName("incomday")[0])) { document.getElementById("valmi").style.visibility = "visible"; return; };
     if (document.getElementById("male").checked) var sex = true;
     else var sex = false;
     $.post("/api/default1", {
@@ -48,7 +81,7 @@ function insertData() {
         "BDate": document.getElementsByName("bday")[0].value,
         "IncomDate": document.getElementsByName("incomday")[0].value
     },
-    setTimeout(function () { location.reload() }, 3000))
+    setTimeout(function () { location.reload() }, 1000))
 }
 
 function deleteData(id) {
@@ -62,7 +95,6 @@ function deleteData(id) {
 }
 
     function pastData(data) {
-        console.log(data);
         document.getElementsByName("fname")[0].value = data.FName;
         document.getElementsByName("lname")[0].value = data.LName;
         document.getElementsByName("sname")[0].value = data.SName;

@@ -41,27 +41,27 @@
 				<form id="mainform">
 				<table>
 				<tr>
-					<td class="fieldn">Фамилия</td><td><input type="text" name="lname"/></td><td></td>
+					<td class="fieldn">Фамилия</td><td><input type="text" name="lname"/></td><td><span id="valml" class="valmes">Поле не должно быть пустым</span></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Имя</td><td><input type="text" name="fname"/></td><td></td>
+					<td class="fieldn">Имя</td><td><input type="text" name="fname"/></td><td><span id="valmf" class="valmes">Поле не должно быть пустым</span></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Отчество</td><td><input type="text" name="sname"/></td><td></td>
+					<td class="fieldn">Отчество</td><td><input type="text" name="sname"/></td><td><span id="valms" class="valmes">Поле не должно быть пустым</span></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Пол</td><td><input id="male" type="radio" name="sex" value="true"/>Мужской&emsp;<input id="female" type="radio" name="sex" value="false"/>Женский</td><td></td>
+					<td class="fieldn">Пол</td><td><input checked="checked" id="male" type="radio" name="sex" value="true"/>Мужской&emsp;<input id="female" type="radio" name="sex" value="false"/>Женский</td><td></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Дата рождения</td><td><input type="date" name="bday" required="required"/></td><td></td>
+					<td class="fieldn">Дата рождения</td><td><input type="date" name="bday" required="required"/></td><td><span id="valmd" class="valmes">Поле неверно заполненно</span></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Дата поступления</td><td><input type="date" name="incomday" required="required"/></td><td></td>
+					<td class="fieldn">Дата поступления</td><td><input type="date" name="incomday" required="required"/></td><td><span id="valmi" class="valmes">Поле неверно заполненно</span></td>
 				</tr>
 				</table>
 				</form>
 				</div>
-				<hr width="700px"/>
+				<hr />
 				<div><div id="titleoinf">Списочек предметов</div><div id="addobj"><a>Добавить предмет</a></div></div>
 				<div id="objectsinf">
 				<table>

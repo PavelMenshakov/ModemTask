@@ -387,3 +387,12 @@ input[type=text]{
 	width:100%;
 	height:20px;
 }
+
+hr {
+    width:700px;
+}
+
+.valmes {
+    color: red;
+    visibility:hidden;
+}
