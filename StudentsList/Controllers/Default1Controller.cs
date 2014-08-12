@@ -22,7 +22,7 @@ namespace StudentsList.Controllers
         }
 
      
-        // GET api/default1/5
+        // GET api/default1/3
         public Student Get(int id)
         {
             Student st = new Student();
