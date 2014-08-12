@@ -1,0 +1,389 @@
+﻿@media print {
+
+    body{
+    width:100%;
+    visibility: hidden;
+	background:white;
+}
+#backref{
+	display:none;
+}
+#sb {
+	display:none;
+}
+
+#studentinf{
+	visibility:visible;
+}
+
+}
+
+body {
+	background: url(img/back_ground.png) repeat-x top;
+	margin: 0 auto;
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 13px;
+	text-align: left;
+	color: #000000;
+	position: relative;
+	width: 1020px;
+	height: 1440px;
+}
+
+#header {
+	width: 100%;
+	height: 56px;
+}
+
+#tt{
+	margin: 0 0 0 50px;
+	width: 225px;
+	height:56px;
+	float: left;
+}
+
+#tt .titletext{
+	top: 17px;
+	position: relative;
+	font-size: x-large;
+}
+
+#gt{
+	margin: 0 0 0 25px;
+	width: 80px;
+	height:56px;
+	float: left;
+}
+
+#gt .grouplist{
+	top: 21px;
+	position: relative;
+}
+
+#gt .grouplist select{
+	background:none;
+	border:none;
+}
+
+#pb{
+	margin: 0 0 0 470px;
+	width: 120px;
+	height:56px;
+	float: left;
+}
+
+#pb .printbutton{
+	top: 17px;
+	position: relative;
+	font-size: x-large;
+}
+
+#pb .printbutton button{
+	background: url(img/pbutton.png) center top;
+	border: none;
+	width: 120px;
+	height: 32px;
+	text-align: right;
+	font-weight: 700;
+}
+
+#content {
+	background: url(img/contentBg.png) repeat-x top;
+	width: 980px;
+	height: 1244px;
+	margin: 0 20px 0 20px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#contenthead {
+	width: 100%;
+	height:98px;
+}
+
+#backref{
+	width: 100%;
+	height:34px;
+	visibility:hidden;
+}
+
+#backref a{
+	position:relative;
+	top:17px;
+	left:30px;
+	color: #2A62B9;
+	text-decoration:none;
+}
+
+a .backtext{
+	text-decoration: underline;
+	font-size: 12pt;
+}
+
+#title {
+	width:100%;
+	height:54px;
+}
+
+#text {
+	font-size:24pt;
+	position:relative;
+	top:12px;
+	left:30px;
+}
+
+#stlist{
+	width: 400px;
+	white-space: nowrap;
+}
+
+.stlist {
+	margin: 0 auto;
+	background: white;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.stlist div:hover{
+	background: rgba(42, 98, 185, 0.34);
+	border-radius: 5px;
+	
+}
+
+#controlf{
+	width: 100%;
+	height: 120px;
+}
+
+#stlist table{
+	border: none;
+}
+
+#stlist div{
+	height: 33px;
+}
+
+#addb {
+	width: 100%;
+	height: 50%;
+	float:left; clear: both;
+}
+
+#addb .addbutton button{
+	background: url(img/addbutton.png) center top;
+	border: none;
+	width: 171px;
+	height: 32px;
+	text-align: right;
+	font-weight: 700;
+	margin: 22px 0 0 20px;
+}
+
+#sb {
+ height: 50%;
+ float:left;
+	visibility:hidden;
+}
+
+table{
+padding:0 0 0 0;
+width:100%;
+}
+
+tr{
+	height:33px;
+}
+
+#sb .sbutton button{
+	background: url(img/sbutton.png) center top no-repeat;
+	border: none;
+	width: 171px;
+	height: 32px;
+	text-align: right;
+	margin: 8px 0 0 20px;
+	color: white;
+}
+.student{
+	position: relative;
+	top: 7px;
+	left:10px;
+	text-decoration: underline;
+	color:#2A62B9;
+	white-space: nowrap;
+}
+
+.stlista .student::after {
+            content: '';
+            position:absolute;
+            display:block;
+            top:0;
+            left:0;
+            height:100%;
+            width:170px;
+            background: -webkit-linear-gradient(right, rgb(241, 241, 241) 0%,rgba(255,255,255,0) 100%);
+        }
+
+.stlista div:hover{
+	border: 1px solid;
+	border-right:none;
+	border-top-left-radius:5px;
+	border-bottom-left-radius:5px;}		
+		
+#stactive{
+	position:relative;
+	z-index:103;
+	background: #fdfdfd;
+	border-top-left-radius:5px;
+	border-bottom-left-radius:5px;
+	border:1px solid #D7D7D7;
+	width: 176px;
+	overflow: hidden;
+	border-right:none;
+}
+
+#stactive a{
+	text-decoration: none;
+	color: black;
+}
+
+#stactive a::after {
+            content: '';
+            position:absolute;
+            display:block;
+            top:0;
+            left:0;
+            height:100%;
+            width:170px;
+			z-index:102;
+            background: -webkit-linear-gradient(right, rgb(255, 255, 255) 0%,rgba(255,255,255,0) 100%);
+        }
+
+.stlista table {
+	border: none;
+	width: 183px;
+}
+
+.stlista {
+	margin-left:20px;
+}
+
+#studentinf{
+	background: #FDFDFD;
+	position:absolute;
+	top: 156px;
+	left: 220px;
+	width: 750px;
+	height: 1090px;
+	z-index: 100;
+	display: none;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#titleminf{
+	margin: 30px 0 30px 25px;
+	font-size:20px;
+	float:left;
+}
+
+#delete{
+	margin:30px 25px 30px 0;
+	float:right;
+	text-decoration:underline;
+	color:#2A62B9;
+}
+
+#maininf{
+	clear:both;
+	margin:25px;
+	margin-bottom: 40px;
+}
+
+.fieldn{
+	width:130px;
+	font-size:15px;
+}
+
+input[type=date]::-webkit-inner-spin-button{
+	display:none;
+}
+
+input[type=date] {
+	border: 2px solid #dadada;
+	border-radius: 5px;
+	font: 13px Helvetica,Arial,sans-serif;
+	outline: 0;
+	padding: 5px 5px;
+	width: 125px;
+	height:28px;
+	background: url(img/dateb.png) right no-repeat;
+}
+
+
+
+input[type=date]:hover{
+	border-color:#2A62B9;
+	}
+
+input[type=date]::-webkit-calendar-picker-indicator {
+	color: rgba(0, 0, 0, 0);
+	height: 8px;
+	position: relative;
+	width: 8px;
+	z-index: 0;
+	visibility:visible;
+}
+
+
+input[type=date]::-webkit-calendar-picker-indicator:hover {
+	background: none;
+}
+input[type=date]:focus {
+	border-color: #3399ff;
+}
+input[type=text]:hover{
+	border-color:#2A62B9;
+	background:rgba(42, 98, 185, 0.09);
+}
+
+input[type=text]{
+	height:28px;
+	width:280px;
+	border-radius: 5px;
+	border: 2px solid #DADADA;
+	padding:10px;
+}
+
+#objectsinf{
+	clear:both;
+	margin:25px;
+	margin-bottom: 40px;
+}
+
+#titleoinf{
+	margin: 30px 0 30px 25px;
+	font-size:20px;
+	float:left;
+}
+
+#addobj{
+	margin:30px 25px 30px 0;
+	float:right;
+	text-decoration:underline;
+	color:#2A62B9;
+}
+
+#diagramd{
+	margin:0 auto;
+	width:330px;
+}
+
+#diagramt{
+	position:relative;
+	text-align:center;
+	top: -200;
+	margin:0 auto;
+}
+
+#chart {
+	width:100%;
+	height:20px;
+}

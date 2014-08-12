@@ -1,0 +1,92 @@
+﻿<html lang="ru">
+	<head>
+		<title>Список студентов</title>
+		<link rel="stylesheet" href="content/style.css" type="text/css" media="all" />
+		<script type="text/javascript" src="content/script.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	</head>
+	<body>
+        <script type="text/javascript">
+            $.getJSON("/api/default1", getJData);
+        </script>
+		<div id="header">
+			<div id="tt"><div class="titletext">Список студентов</div></div>
+			<div id="gt"><div class="grouplist">
+				<select>
+					<option>ИТ-12</option>
+					<option>ИТ-11</option>
+					<option>ИТ-22</option>
+				</select>
+			</div></div>
+			<div id="pb"><div class="printbutton"><button onclick="javascript: window.print();">Распечатать</button></div></div>
+		</div>
+		<div id="content">
+			<div id="contenthead">
+				<div id="backref"><a href="../">&larr; <span class="backtext">Вернуться к списку студентов</span></a></div>
+				<div id="title"><span id="text">Выберите студента</span></div>
+			</div>
+			<div id="controlf">
+				<div id="addb"><div class="addbutton"><button onclick="add_st()">Добавить студента</button></div></div>
+				<div id="sb"><div class="sbutton"><button>Сохранить изменения</button></div></div>
+				</div>
+			<div id="stlist" class="stlist">
+				
+				<table>
+					
+				</table>				
+			</div>
+			<div id="studentinf">
+			<div><div id="titleminf">Стандартные личные данные</div><div id="delete"><a>Удалить</a></div></div>
+				<div id="maininf">
+				<form id="mainform">
+				<table>
+				<tr>
+					<td class="fieldn">Фамилия</td><td><input type="text" name="lname"/></td><td></td>
+				</tr>
+				<tr>
+					<td class="fieldn">Имя</td><td><input type="text" name="fname"/></td><td></td>
+				</tr>
+				<tr>
+					<td class="fieldn">Отчество</td><td><input type="text" name="sname"/></td><td></td>
+				</tr>
+				<tr>
+					<td class="fieldn">Пол</td><td><input id="male" type="radio" name="sex" value="true"/>Мужской&emsp;<input id="female" type="radio" name="sex" value="false"/>Женский</td><td></td>
+				</tr>
+				<tr>
+					<td class="fieldn">Дата рождения</td><td><input type="date" name="bday" required="required"/></td><td></td>
+				</tr>
+				<tr>
+					<td class="fieldn">Дата поступления</td><td><input type="date" name="incomday" required="required"/></td><td></td>
+				</tr>
+				</table>
+				</form>
+				</div>
+				<hr width="700px"/>
+				<div><div id="titleoinf">Списочек предметов</div><div id="addobj"><a>Добавить предмет</a></div></div>
+				<div id="objectsinf">
+				<table>
+				<tr>
+					<td><input onchange="draw_chart()" type="checkbox" id="obj1"  title="Первый предмет" value="10"/>Первый предмет</td><td><input onchange="draw_chart()" type="checkbox" id="obj2"  title="Первый предмет" value="11"/>Первый предмет</td><td><input onchange="draw_chart()" type="checkbox"  title="Первый предмет" id="obj3" value="12"/>Первый предмет</td>
+				</tr>
+				<tr>
+					<td><input onchange="draw_chart()" type="checkbox" id="obj4" value="13" title="Второй предмет"/>Второй предмет</td><td><input  title="Второй предмет" onchange="draw_chart()" type="checkbox" id="obj5" value="14"/>Второй предмет</td><td><input title="Второй предмет" onchange="draw_chart()" type="checkbox" id="obj6" value="15"/>Второй предмет</td>
+				</tr>
+				<tr>
+					<td><input onchange="draw_chart()" type="checkbox" id="obj7" value="16" title="Третий предмет"/>Третий предмет</td><td><input onchange="draw_chart()" title="Третий предмет" type="checkbox" id="obj8" value="17"/>Третий предмет</td><td><input onchange="draw_chart()" title="Третий предмет" type="checkbox" id="obj9" value="18"/>Третий предмет</td>
+				</tr>
+				</table>
+				<canvas id="metric" width="700" height="20">
+						<p>HTML5 не поддерживается вашим браузером</p>
+				</canvas>
+				<div id="chart"></div>
+				<div id="diagramd">
+				<canvas id="diagram" width="330" height="330">
+						<p>HTML5 не поддерживается вашим браузером</p>
+				</canvas>
+				<div id="diagramt"></div>
+				</div>
+			</div>
+		</div>
+            </div>
+	</body>
+</html>
