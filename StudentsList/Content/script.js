@@ -1,4 +1,7 @@
-﻿function getJData(data) {
+﻿function getJData() {
+    $.getJSON("/api/default1", pastJData);
+}
+function pastJData(data) {
     for (var i = 0; i < data.length; i++) {
         document.getElementById("stlist").getElementsByTagName('table')[0].innerHTML += "<tr><td><div onclick='focus_st(this," + data[i].id + ")'><a class='student'>" + data[i].LName + " " + data[i].FName + " " + data[i].SName + "</a></div></td></tr>";
     }
@@ -6,8 +9,9 @@
 
 function focus_st(e,id) {
     var oldact = document.getElementById("stactive");
-    if (oldact != null)
+    if (oldact != null) {
         oldact.id = "";
+    }
     e.id = "stactive";
     activ_list();
     document.getElementById("delete").style.visibility = "visible";
@@ -22,12 +26,11 @@ function focus_st(e,id) {
 
 }
 
-function valDate(e) {
+function validateDate(e) {
     re = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
-
     if (e.value != '') {
         if (regs = e.value.match(re)) {
-            if (regs[3] < 1 ||regs[3] > 31) {
+            if (regs[3] < 1 || regs[3] > 31) {
                 return false;
             }
             if (regs[2] < 1 || regs[2] > 12) {
@@ -40,20 +43,73 @@ function valDate(e) {
         } else {
             return false;
         }
+    } else {
+        return false;
     }
     return true;
 }
 
+function setVisibilityById(id,value) {
+    document.getElementById(id).style.visibility = value;
+}
+
+function validateFields() {
+    if (document.getElementsByName("fname")[0].value.length == 0) {
+        setVisibilityById("valmf", "visible"); return false;
+    } else {
+        setVisibilityById("valmf", "hidden");
+    };
+    if (document.getElementsByName("lname")[0].value.length == 0) {
+        setVisibilityById("valml", "visible"); return false;
+    } else {
+        setVisibilityById("valml", "hidden");
+    };
+    if (document.getElementsByName("sname")[0].value.length == 0) {
+        setVisibilityById("valms", "visible"); return false;
+    } else {
+        setVisibilityById("valms", "hidden");
+    };
+    if (!validateDate(document.getElementsByName("bday")[0])) {
+        setVisibilityById("valmb", "visible"); return false;
+    } else {
+        setVisibilityById("valmb", "hidden");
+    };
+    if (!validateDate(document.getElementsByName("incomday")[0])) {
+        setVisibilityById("valmi", "visible"); return false;
+    } else {
+        setVisibilityById("valmi", "hidden");
+    };
+    return true;
+}
 
 function saveData(id) {
-    if (document.getElementsByName("fname")[0].value.length == 0) { document.getElementById("valmf").style.visibility = "visible"; return; };
-    if (document.getElementsByName("lname")[0].value.length == 0) { document.getElementById("valml").style.visibility = "visible"; return; };
-    if (document.getElementsByName("sname")[0].value.length == 0) { document.getElementById("valms").style.visibility = "visible"; return; };
-    if (!valDate(document.getElementsByName("bday")[0])) { document.getElementById("valmd").style.visibility = "visible"; return; };
-    if (!valDate(document.getElementsByName("incomday")[0])) { document.getElementById("valmi").style.visibility = "visible"; return; };
-    if (document.getElementById("male").checked) var sex = true;
-    else var sex = false;
-    $.post("/api/default1", {
+    if (!validateFields()) {
+        return;
+    }
+    $.post("/api/default1", getSendingData(id));
+    alertMesAndRel("Данные обновлены");
+}
+
+function alertMesAndRel(text) {
+    alert(text);
+    location.reload();
+}
+
+function insertData() {
+    if (!validateFields()) {
+        return;
+    }
+    $.post("/api/default1", getSendingData("-1"));
+    alertMesAndRel("Студент добавлен");
+}
+
+function getSendingData(id) {
+    if (document.getElementById("male").checked) {
+        var sex = true;
+    } else {
+        var sex = false;
+    }
+    return {
         "Id": id,
         "FName": document.getElementsByName("fname")[0].value,
         "LName": document.getElementsByName("lname")[0].value,
@@ -61,27 +117,7 @@ function saveData(id) {
         "Sex": sex,
         "BDate": document.getElementsByName("bday")[0].value,
         "IncomDate": document.getElementsByName("incomday")[0].value
-    },
-    setTimeout(function () { location.reload() }, 1000))
-}
-
-function insertData() {
-    if (document.getElementsByName("fname")[0].value.length == 0) { document.getElementById("valmf").style.visibility = "visible"; return; };
-    if (document.getElementsByName("lname")[0].value.length == 0) { document.getElementById("valml").style.visibility = "visible"; return; };
-    if (document.getElementsByName("sname")[0].value.length == 0) { document.getElementById("valms").style.visibility = "visible"; return; };
-    if (!valDate(document.getElementsByName("bday")[0])) { document.getElementById("valmd").style.visibility = "visible"; return; };
-    if (!valDate(document.getElementsByName("incomday")[0])) { document.getElementById("valmi").style.visibility = "visible"; return; };
-    if (document.getElementById("male").checked) var sex = true;
-    else var sex = false;
-    $.post("/api/default1", {
-        "FName": document.getElementsByName("fname")[0].value,
-        "LName": document.getElementsByName("lname")[0].value,
-        "SName": document.getElementsByName("sname")[0].value,
-        "Sex": sex,
-        "BDate": document.getElementsByName("bday")[0].value,
-        "IncomDate": document.getElementsByName("incomday")[0].value
-    },
-    setTimeout(function () { location.reload() }, 1000))
+    };
 }
 
 function deleteData(id) {
@@ -89,9 +125,9 @@ function deleteData(id) {
         type: 'DELETE',
         url: '/api/default1/' + id,
         contentType: 'application/json; charset=utf-8',
-        dataType: 'json',
-        seccsess: setTimeout(function () { location.reload() }, 1000)
+        dataType: 'json'
     });
+    alertMesAndRel("Студент удален");
 }
 
     function pastData(data) {
@@ -100,38 +136,44 @@ function deleteData(id) {
         document.getElementsByName("sname")[0].value = data.SName;
         document.getElementsByName("bday")[0].value = data.BDate.split("T")[0];
         document.getElementsByName("incomday")[0].value = data.IncomDate.split("T")[0];
-        if (data.Sex) document.getElementById("male").checked = true;
-        else document.getElementById("female").checked = true;
-
+        if (data.Sex) {
+            document.getElementById("male").checked = true;
+        } else {
+            document.getElementById("female").checked = true;
+        }
     }
 
     function activ_list() {
         document.getElementById("stlist").className = 'stlista';
         document.getElementById("studentinf").style.display = "block";
-        document.getElementById("backref").style.visibility = "visible";
+        setVisibilityById("backref", "visible");
+        setVisibilityById("sb", "visible");
         document.getElementById("sb").style.visibility = "visible";
         document.getElementById("mainform").reset();
-        draw_rchart(98, 52);
+        drawPieChart(98, 52);
 
     }
+
     function add_st() {
         activ_list();
         document.getElementById("delete").style.visibility = "hidden";
         var oldact = document.getElementById("stactive");
-        if (oldact != null)
+        if (oldact != null) {
             oldact.id = "";
+        }
         document.getElementById('sb').getElementsByTagName('button')[0].onclick = function () {
             insertData();
         };
     }
 
 
-    function draw_chart() {
+    function drawChart() {
 
         var summ = 0;
         for (var i = 1; i < 10; i++) {
-            if (document.getElementById("obj" + i).checked)
+            if (document.getElementById("obj" + i).checked) {
                 summ += parseInt(document.getElementById("obj" + i).value);
+            }
         }
 
         var drawingCanvas = document.getElementById('metric');
@@ -144,13 +186,19 @@ function deleteData(id) {
                 context.moveTo(i * (70), 20);
                 if (i == 0 || i == 5 || i == 10) {
                     context.lineTo(i * (70), 10);
-                    if (i == 0) context.textAlign = "left";
-                    if (i == 5) context.textAlign = "center";
-                    if (i == 10) context.textAlign = "right";
+                    if (i == 0) {
+                        context.textAlign = "left";
+                    }
+                    if (i == 5) {
+                        context.textAlign = "center";
+                    }
+                    if (i == 10) {
+                        context.textAlign = "right";
+                    }
                     context.fillText(summ * (i / 10), i * (70), 8);
-                }
-                else
+                } else {
                     context.lineTo(i * (70), 15);
+                }
             }
             context.closePath();
             context.stroke();
@@ -159,14 +207,15 @@ function deleteData(id) {
             div.innerHTML = "";
             for (var i = 1; i < 10; i++) {
                 var item = document.getElementById("obj" + i);
-                if (item.checked)
+                if (item.checked) {
                     div.innerHTML += "<div title='" + item.title + "' style='float:left; height:10px; width:" + parseInt(item.value) * (700 / summ) + "px;background:rgba(255, " + parseInt(item.value) * 14 + ", 0, 0.94);'></div>";
+                }
             }
         }
     }
 
 
-    function draw_rchart(value1, value2) {
+    function drawPieChart(value1, value2) {
         var drawingCanvas = document.getElementById('diagram');
         if (drawingCanvas && drawingCanvas.getContext) {
             var context = drawingCanvas.getContext('2d');

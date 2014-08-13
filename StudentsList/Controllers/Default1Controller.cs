@@ -50,7 +50,7 @@ namespace StudentsList.Controllers
         {
             using (StudentsContext ctx = new StudentsContext())
             {
-                if (value.Id == 0)
+                if (value.Id==-1)
                 {
                     Student e = new Student()
                     {

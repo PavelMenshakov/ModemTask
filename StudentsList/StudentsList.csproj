@@ -122,8 +122,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Students.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentsContext.cs" />
+    <Compile Include="Models\Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

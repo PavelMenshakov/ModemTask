@@ -5,9 +5,9 @@
 		<script type="text/javascript" src="content/script.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	</head>
-	<body>
+	<body onload="getJData()">
         <script type="text/javascript">
-            $.getJSON("/api/default1", getJData);
+           
         </script>
 		<div id="header">
 			<div id="tt"><div class="titletext">Список студентов</div></div>
@@ -53,7 +53,7 @@
 					<td class="fieldn">Пол</td><td><input checked="checked" id="male" type="radio" name="sex" value="true"/>Мужской&emsp;<input id="female" type="radio" name="sex" value="false"/>Женский</td><td></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Дата рождения</td><td><input type="date" name="bday" required="required"/></td><td><span id="valmd" class="valmes">Поле неверно заполненно</span></td>
+					<td class="fieldn">Дата рождения</td><td><input type="date" name="bday" required="required"/></td><td><span id="valmb" class="valmes">Поле неверно заполненно</span></td>
 				</tr>
 				<tr>
 					<td class="fieldn">Дата поступления</td><td><input type="date" name="incomday" required="required"/></td><td><span id="valmi" class="valmes">Поле неверно заполненно</span></td>
@@ -66,13 +66,13 @@
 				<div id="objectsinf">
 				<table>
 				<tr>
-					<td><input onchange="draw_chart()" type="checkbox" id="obj1"  title="Первый предмет" value="10"/>Первый предмет</td><td><input onchange="draw_chart()" type="checkbox" id="obj2"  title="Первый предмет" value="11"/>Первый предмет</td><td><input onchange="draw_chart()" type="checkbox"  title="Первый предмет" id="obj3" value="12"/>Первый предмет</td>
+					<td><input onchange="drawChart()" type="checkbox" id="obj1"  title="Первый предмет" value="10"/>Первый предмет</td><td><input onchange="drawChart()" type="checkbox" id="obj2"  title="Первый предмет" value="11"/>Первый предмет</td><td><input onchange="drawChart()" type="checkbox"  title="Первый предмет" id="obj3" value="12"/>Первый предмет</td>
 				</tr>
 				<tr>
-					<td><input onchange="draw_chart()" type="checkbox" id="obj4" value="13" title="Второй предмет"/>Второй предмет</td><td><input  title="Второй предмет" onchange="draw_chart()" type="checkbox" id="obj5" value="14"/>Второй предмет</td><td><input title="Второй предмет" onchange="draw_chart()" type="checkbox" id="obj6" value="15"/>Второй предмет</td>
+					<td><input onchange="drawChart()" type="checkbox" id="obj4" value="13" title="Второй предмет"/>Второй предмет</td><td><input  title="Второй предмет" onchange="drawChart()" type="checkbox" id="obj5" value="14"/>Второй предмет</td><td><input title="Второй предмет" onchange="drawChart()" type="checkbox" id="obj6" value="15"/>Второй предмет</td>
 				</tr>
 				<tr>
-					<td><input onchange="draw_chart()" type="checkbox" id="obj7" value="16" title="Третий предмет"/>Третий предмет</td><td><input onchange="draw_chart()" title="Третий предмет" type="checkbox" id="obj8" value="17"/>Третий предмет</td><td><input onchange="draw_chart()" title="Третий предмет" type="checkbox" id="obj9" value="18"/>Третий предмет</td>
+					<td><input onchange="drawChart()" type="checkbox" id="obj7" value="16" title="Третий предмет"/>Третий предмет</td><td><input onchange="drawChart()" title="Третий предмет" type="checkbox" id="obj8" value="17"/>Третий предмет</td><td><input onchange="drawChart()" title="Третий предмет" type="checkbox" id="obj9" value="18"/>Третий предмет</td>
 				</tr>
 				</table>
 				<canvas id="metric" width="700" height="20">
