@@ -3,33 +3,33 @@
 }
 function pastJData(data) {
     for (var i = 0; i < data.length; i++) {
-        document.getElementById("stlist").getElementsByTagName('table')[0].innerHTML += "<tr><td><div onclick='focus_st(this," + data[i].id + ")'><a class='student'>" + data[i].LName + " " + data[i].FName + " " + data[i].SName + "</a></div></td></tr>";
+        $("#stlist table").append("<tr><td><div onclick='focus_st(this," + data[i].id + ")'><a class='student'>" + data[i].LName + " " + data[i].FName + " " + data[i].SName + "</a></div></td></tr>");
     }
 }
 
 function focus_st(e,id) {
-    var oldact = document.getElementById("stactive");
-    if (oldact != null) {
-        oldact.id = "";
+    if ($("#stactive")) {
+        $("#stactive").attr("id", "");
     }
     e.id = "stactive";
     activ_list();
-    document.getElementById("delete").style.visibility = "visible";
-    document.getElementById('delete').onclick = function () {
+    $("#delete").css("visibility", "visible");
+    $("#delete").attr('onclick', '').unbind('click');
+    $("#delete").click(function () {
         deleteData(id);
-    };
-    document.getElementById("text").innerHTML = e.getElementsByTagName('a')[0].innerHTML;
-    document.getElementById('sb').getElementsByTagName('button')[0].onclick = function () {
+    });
+    $("#text").html($("#" + e.id + " a").html());
+    $("#sb button").attr('click', '').unbind('click');
+    $("#sb button").click( function () {
         saveData(id);
-    };
+    });
     $.getJSON("/api/default1/" + id, pastData);
-
 }
 
 function validateDate(e) {
     re = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
-    if (e.value != '') {
-        if (regs = e.value.match(re)) {
+    if (e.val() != '') {
+        if (regs = e.val().match(re)) {
             if (regs[3] < 1 || regs[3] > 31) {
                 return false;
             }
@@ -50,36 +50,32 @@ function validateDate(e) {
 }
 
 function setVisibilityById(id,value) {
-    document.getElementById(id).style.visibility = value;
+    $("#" + id).css("visibility", value);
 }
 
 function validateFields() {
-    if (document.getElementsByName("fname")[0].value.length == 0) {
-        setVisibilityById("valmf", "visible"); return false;
-    } else {
-        setVisibilityById("valmf", "hidden");
-    };
-    if (document.getElementsByName("lname")[0].value.length == 0) {
-        setVisibilityById("valml", "visible"); return false;
-    } else {
-        setVisibilityById("valml", "hidden");
-    };
-    if (document.getElementsByName("sname")[0].value.length == 0) {
-        setVisibilityById("valms", "visible"); return false;
-    } else {
-        setVisibilityById("valms", "hidden");
-    };
-    if (!validateDate(document.getElementsByName("bday")[0])) {
-        setVisibilityById("valmb", "visible"); return false;
-    } else {
-        setVisibilityById("valmb", "hidden");
-    };
-    if (!validateDate(document.getElementsByName("incomday")[0])) {
-        setVisibilityById("valmi", "visible"); return false;
-    } else {
-        setVisibilityById("valmi", "hidden");
-    };
-    return true;
+    var nameFlMes = new Array("valmf", "valml", "valms");
+    var nameFl = new Array("fname", "lname", "sname");
+    var flag = true;
+    var dateFl = new Array("bday", "incomday");
+    var dateFlmes = new Array("valmb", "valmi");
+    for (var i = 0; i < nameFl.length; i++) {
+        if ($("[name = '" + nameFl[i] + "']").val().length == 0) {
+            setVisibilityById(nameFlMes[i], "visible");
+            flag = false;
+        } else {
+            setVisibilityById(nameFlMes[i], "hidden");
+        };
+    }
+    for (var i = 0; i < dateFl.length; i++) {
+        if (!validateDate($("[name = " + dateFl[i] + "]"))) {
+            setVisibilityById(dateFlmes[i], "visible");
+            flag = false;
+        } else {
+            setVisibilityById(dateFlmes[i], "hidden");
+        };
+    }
+    return flag;
 }
 
 function saveData(id) {
@@ -104,19 +100,19 @@ function insertData() {
 }
 
 function getSendingData(id) {
-    if (document.getElementById("male").checked) {
+    if ($("#male").is(":checked")) {
         var sex = true;
     } else {
         var sex = false;
     }
     return {
         "Id": id,
-        "FName": document.getElementsByName("fname")[0].value,
-        "LName": document.getElementsByName("lname")[0].value,
-        "SName": document.getElementsByName("sname")[0].value,
+        "FName": $("[name = 'fname']").val(),
+        "LName": $("[name = 'lname']").val(),
+        "SName": $("[name = 'sname']").val(),
         "Sex": sex,
-        "BDate": document.getElementsByName("bday")[0].value,
-        "IncomDate": document.getElementsByName("incomday")[0].value
+        "BDate": $("[name = 'bday']").val(),
+        "IncomDate": $("[name = 'incomday']").val()
     };
 }
 
@@ -131,39 +127,38 @@ function deleteData(id) {
 }
 
     function pastData(data) {
-        document.getElementsByName("fname")[0].value = data.FName;
-        document.getElementsByName("lname")[0].value = data.LName;
-        document.getElementsByName("sname")[0].value = data.SName;
-        document.getElementsByName("bday")[0].value = data.BDate.split("T")[0];
-        document.getElementsByName("incomday")[0].value = data.IncomDate.split("T")[0];
+        $("[name = 'fname']").val(data.FName);
+        $("[name = 'lname']").val(data.LName);
+        $("[name = 'sname']").val(data.SName);
+        $("[name = 'bday']").val(data.BDate.split("T")[0]);
+        $("[name = 'incomday']").val(data.IncomDate.split("T")[0]);
         if (data.Sex) {
-            document.getElementById("male").checked = true;
+            $("#male").prop('checked', true);
         } else {
-            document.getElementById("female").checked = true;
+            $("#female").prop('checked', true);
         }
     }
 
     function activ_list() {
-        document.getElementById("stlist").className = 'stlista';
-        document.getElementById("studentinf").style.display = "block";
+        $("#stlist").attr("class", "stlista");
+        $("#studentinf").css("display", "block");
         setVisibilityById("backref", "visible");
         setVisibilityById("sb", "visible");
-        document.getElementById("sb").style.visibility = "visible";
-        document.getElementById("mainform").reset();
+        $("#mainform").trigger('reset')
         drawPieChart(98, 52);
-
     }
 
     function add_st() {
         activ_list();
-        document.getElementById("delete").style.visibility = "hidden";
-        var oldact = document.getElementById("stactive");
-        if (oldact != null) {
-            oldact.id = "";
+        setVisibilityById("delete", "hidden");
+        
+        if ($("#stactive")) {
+            $("#stactive").attr("id", "");
         }
-        document.getElementById('sb').getElementsByTagName('button')[0].onclick = function () {
+        $("#sb button").attr('onclick', '').unbind('click');
+        $("#sb button").click( function () {
             insertData();
-        };
+        });
     }
 
 
@@ -171,12 +166,12 @@ function deleteData(id) {
 
         var summ = 0;
         for (var i = 1; i < 10; i++) {
-            if (document.getElementById("obj" + i).checked) {
-                summ += parseInt(document.getElementById("obj" + i).value);
+            if ($("#obj" + i).is( ":checked" )) {
+                summ += parseInt($("#obj" + i).val());
             }
         }
 
-        var drawingCanvas = document.getElementById('metric');
+        var drawingCanvas = document.getElementById("metric");
         if (drawingCanvas && drawingCanvas.getContext) {
             var context = drawingCanvas.getContext('2d');
             context.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
@@ -203,12 +198,10 @@ function deleteData(id) {
             context.closePath();
             context.stroke();
 
-            var div = document.getElementById("chart");
-            div.innerHTML = "";
+            $("#chart").html("");
             for (var i = 1; i < 10; i++) {
-                var item = document.getElementById("obj" + i);
-                if (item.checked) {
-                    div.innerHTML += "<div title='" + item.title + "' style='float:left; height:10px; width:" + parseInt(item.value) * (700 / summ) + "px;background:rgba(255, " + parseInt(item.value) * 14 + ", 0, 0.94);'></div>";
+                if ($("#obj" + i).is(":checked")) {
+                    $("#chart").append("<div title='" + $("#obj" + i).attr("title") + "' style='float:left; height:10px; width:" + parseInt($("#obj" + i).val()) * (700 / summ) + "px;background:rgba(255, " + parseInt($("#obj" + i).val()) * 14 + ", 0, 0.94);'></div>");
                 }
             }
         }
@@ -268,5 +261,5 @@ function deleteData(id) {
             context.fillText("50", x, y);
         }
 
-        document.getElementById('diagramt').innerHTML = "Всего прогуляно<br />" + value1 + "<br />Из них по<br />уважительной причине<br />" + value2;
+        $("#diagramt").html("Всего прогуляно<br />" + value1 + "<br />Из них по<br />уважительной причине<br />" + value2);
     }

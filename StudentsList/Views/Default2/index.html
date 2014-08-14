@@ -3,6 +3,7 @@
 		<title>Список студентов</title>
 		<link rel="stylesheet" href="content/style.css" type="text/css" media="all" />
 		<script type="text/javascript" src="content/script.js"></script>
+        <script type="text/javascript" src="content/calendar_ru.js"></script>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 	</head>
 	<body onload="getJData()">
@@ -39,26 +40,32 @@
 			<div><div id="titleminf">Стандартные личные данные</div><div id="delete"><a>Удалить</a></div></div>
 				<div id="maininf">
 				<form id="mainform">
-				<table>
+				<div  class="namef">
+                 <table>
 				<tr>
 					<td class="fieldn">Фамилия</td><td><input type="text" name="lname"/></td><td><span id="valml" class="valmes">Поле не должно быть пустым</span></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Имя</td><td><input type="text" name="fname"/></td><td><span id="valmf" class="valmes">Поле не должно быть пустым</span></td>
+					<td class="fieldn">Имя</td><td><input  type="text" name="fname"/></td><td><span id="valmf" class="valmes">Поле не должно быть пустым</span></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Отчество</td><td><input type="text" name="sname"/></td><td><span id="valms" class="valmes">Поле не должно быть пустым</span></td>
+					<td class="fieldn">Отчество</td><td><input  type="text" name="sname"/></td><td><span id="valms" class="valmes">Поле не должно быть пустым</span></td>
 				</tr>
 				<tr>
 					<td class="fieldn">Пол</td><td><input checked="checked" id="male" type="radio" name="sex" value="true"/>Мужской&emsp;<input id="female" type="radio" name="sex" value="false"/>Женский</td><td></td>
 				</tr>
+                </table>
+                    </div>
+                    <div class="datef" >
+                <table>
 				<tr>
-					<td class="fieldn">Дата рождения</td><td><input type="date" name="bday" required="required"/></td><td><span id="valmb" class="valmes">Поле неверно заполненно</span></td>
+					<td class="fieldn">Дата рождения</td><td><input type="text" value="дд-мм-гггг" name="bday"/><input type="button" onclick="" /></td><td><span id="valmb" class="valmes">Поле неверно заполненно</span></td>
 				</tr>
 				<tr>
-					<td class="fieldn">Дата поступления</td><td><input type="date" name="incomday" required="required"/></td><td><span id="valmi" class="valmes">Поле неверно заполненно</span></td>
+					<td class="fieldn">Дата поступления</td><td><input type="text" value="дд-мм-гггг" name="incomday"/><input type="button" onclick="" /></td><td><span id="valmi" class="valmes">Поле неверно заполненно</span></td>
 				</tr>
 				</table>
+                        </div>
 				</form>
 				</div>
 				<hr />
