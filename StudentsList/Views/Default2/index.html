@@ -3,8 +3,11 @@
 		<title>Список студентов</title>
 		<link rel="stylesheet" href="content/style.css" type="text/css" media="all" />
 		<script type="text/javascript" src="content/script.js"></script>
-        <script type="text/javascript" src="content/calendar_ru.js"></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="content/validate.js"></script>
+        <script type="text/javascript" src="content/getsend.js"></script>
+        <script type="text/javascript" src="content/draw.js"></script>
+        <script type="text/javascript" src="content/calendar.js"></script>
+        <script type="text/javascript" src="content/jquery-1.11.1.min.js"></script>
 	</head>
 	<body onload="getJData()">
         <script type="text/javascript">
@@ -27,7 +30,7 @@
 				<div id="title"><span id="text">Выберите студента</span></div>
 			</div>
 			<div id="controlf">
-				<div id="addb"><div class="addbutton"><button onclick="add_st()">Добавить студента</button></div></div>
+				<div id="addb"><div class="addbutton"><button onclick="addingStudent()">Добавить студента</button></div></div>
 				<div id="sb"><div class="sbutton"><button>Сохранить изменения</button></div></div>
 				</div>
 			<div id="stlist" class="stlist">
@@ -59,7 +62,7 @@
                     <div class="datef" >
                 <table>
 				<tr>
-					<td class="fieldn">Дата рождения</td><td><input type="date" value="дд-мм-гггг" name="bday"/><input type="button" onclick="" /></td><td><span id="valmb" class="valmes">Поле неверно заполненно</span></td>
+					<td class="fieldn">Дата рождения</td><td><input type="date" value="дд-мм-гггг" name="bday"/><input type="button" onclick="event.cancelBubble=true;this.select();lcs('bday')" /></td><td><span id="valmb" class="valmes">Поле неверно заполненно</span></td>
 				</tr>
 				<tr>
 					<td class="fieldn">Дата поступления</td><td><input type="date" value="дд-мм-гггг" name="incomday"/><input type="button" onclick="" /></td><td><span id="valmi" class="valmes">Поле неверно заполненно</span></td>

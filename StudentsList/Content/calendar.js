@@ -66,7 +66,7 @@ var ccy=now.getFullYear();
 // For current selected date
 var selectedd, selectedm, selectedy;
 
-document.write('<table id="fc" style="position:absolute;border-collapse:collapse;background:#FFFFFF;border:1px solid #FFD088;display:none;-moz-user-select:none;-khtml-user-select:none;user-select:none; width:300px; z-index:999;" cellpadding="2">');
+document.write('<table id="fc" style="position:absolute;border-collapse:collapse;background:#E4E1D0;border:1px solid #F1F1F1;display:none;-moz-user-select:none;-khtml-user-select:none;user-select:none; width:250px; z-index:999; border-radius: 5px;" cellpadding="2">');
 document.write('<tr style="font:bold 13px Arial" onselectstart="return false"><td style="cursor:pointer;font-size:15px" onclick="upmonth(-1)">&laquo;</td><td colspan="5" id="mns" align="center"></td><td align="right" style="cursor:pointer;font-size:15px" onclick="upmonth(1)">&raquo;</td></tr>');
 document.write('<tr style="background:#FF9900;font:12px Arial;color:#FFFFFF"><td align=center>П</td><td align=center>В</td><td align=center>С</td><td align=center>Ч</td><td align=center>П</td><td align=center>С</td><td align=center>В</td></tr>');
 for(var kk=1;kk<=6;kk++) {

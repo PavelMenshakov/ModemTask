@@ -119,6 +119,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Default1Controller.cs" />
     <Compile Include="Controllers\Default2Controller.cs" />
+    <Compile Include="Controllers\Default3Controller.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -132,7 +133,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="Content\calendar_ru.js" />
+    <Content Include="Content\calendar.js" />
+    <Content Include="Content\draw.js" />
+    <Content Include="Content\getsend.js" />
     <Content Include="Content\img\addbutton.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -172,6 +175,7 @@
     <Content Include="Content\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\validate.js" />
     <Content Include="Global.asax" />
     <Content Include="Views\Default2\index.html" />
     <Content Include="Views\Web.config">
