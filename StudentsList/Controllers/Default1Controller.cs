@@ -13,15 +13,15 @@ namespace StudentsList.Controllers
     public class Default1Controller : ApiController
     {
         // GET api/default1
-        public List<Group> Get()
+        public List<Student> Get()
         {
             using (var StudentsDb = new StudentsContext())
             {
-                return StudentsDb.Groups.ToList();
+                return StudentsDb.StudentsList.ToList();
             }
         }
 
-     
+
         // GET api/default1/3
         public Student Get(int id)
         {
@@ -29,9 +29,9 @@ namespace StudentsList.Controllers
             using (var StudentsDb = new StudentsContext())
             {
                 var students = from Student in StudentsDb.StudentsList
-                              where Student.Id == id
-                                  select Student;
-                foreach(var student in students)
+                               where Student.Id == id
+                               select Student;
+                foreach (var student in students)
                 {
                     st.FName = student.FName;
                     st.LName = student.LName;
@@ -39,19 +39,45 @@ namespace StudentsList.Controllers
                     st.BDate = student.BDate;
                     st.IncomDate = student.IncomDate;
                     st.Sex = student.Sex;
-                   
+
                 }
             }
             return st;
         }
 
         // POST api/default1
-        public void Post([FromBody]Group value)
+        public void Post([FromBody]Student value)
         {
             using (StudentsContext ctx = new StudentsContext())
             {
-                ctx.Groups.Add(value);
-                ctx.SaveChanges();
+                if (value.Id == -1)
+                {
+                    Student e = new Student()
+                    {
+                        FName = value.FName,
+                        SName = value.SName,
+                        LName = value.LName,
+                        BDate = value.BDate,
+                        IncomDate = value.IncomDate,
+                        Sex = value.Sex
+                    };
+                    ctx.StudentsList.Add(e);
+                    ctx.SaveChanges();
+                }
+                else
+                {
+                    var original = ctx.StudentsList.Find(value.Id);
+                    if (original != null)
+                    {
+                        original.FName = value.FName;
+                        original.SName = value.SName;
+                        original.LName = value.LName;
+                        original.BDate = value.BDate;
+                        original.IncomDate = value.IncomDate;
+                        original.Sex = value.Sex;
+                        ctx.SaveChanges();
+                    }
+                }
             }
         }
 
