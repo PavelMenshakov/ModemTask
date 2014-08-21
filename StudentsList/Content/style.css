@@ -322,14 +322,14 @@ tr {
 .datef input[type=button] {
     width: 25px;
     height: 28px;
-    border: 0px;
+    border: 2px solid #DADADA;
     border-radius: 5px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     margin-left: 0px;
     background: url(img/dateb.png) right no-repeat;
     position: relative;
-    top: 7px;
+    top: 6px;
 }
 
 input[type=text]:hover {

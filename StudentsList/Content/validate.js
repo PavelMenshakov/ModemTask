@@ -1,4 +1,4 @@
-function validateFields() {
+﻿function validateFields() {
     var nameFlMes = new Array("valmf", "valml", "valms");
     var nameFl = new Array("fname", "lname", "sname");
     var flag = true;

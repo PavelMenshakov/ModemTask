@@ -11,7 +11,7 @@ namespace StudentsList.Models
     [DataContract]
     public class Student
     {
-        [DataMember(Name="id")]
+        [DataMember(Name="Id")]
         public long Id { get; set; }
         [DataMember(Name = "FName")]
         public string FName { get; set; }
@@ -25,5 +25,7 @@ namespace StudentsList.Models
         public DateTime BDate { get; set; }
         [DataMember(Name = "IncomDate")]
         public DateTime IncomDate { get; set; }
+        [DataMember(Name = "Subjects")]
+        public ICollection<Subject> Subjects { get; set; }
     }
 }

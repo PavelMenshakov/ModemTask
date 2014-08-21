@@ -1,4 +1,4 @@
-function drawChart() {
+п»їfunction drawChart() {
 
     var summ = 0;
     for (var i = 1; i < 10; i++) {
@@ -98,5 +98,5 @@ function drawPieChart(value1, value2) {
         context.fillText("50", x, y);
     }
 
-    $("#diagramt").html("Всего прогуляно<br />" + value1 + "<br />Из них по<br />уважительной причине<br />" + value2);
+    $("#diagramt").html("Р’СЃРµРіРѕ РїСЂРѕРіСѓР»СЏРЅРѕ<br />" + value1 + "<br />РР· РЅРёС… РїРѕ<br />СѓРІР°Р¶РёС‚РµР»СЊРЅРѕР№ РїСЂРёС‡РёРЅРµ<br />" + value2);
 }

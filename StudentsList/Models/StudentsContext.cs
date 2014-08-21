@@ -8,7 +8,8 @@ namespace StudentsList.Models
 {
     public class StudentsContext:DbContext
     {
-        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Group> Groups { get; set; }
         public DbSet<Student> StudentsList { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
     }
 }

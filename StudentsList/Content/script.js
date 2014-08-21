@@ -1,4 +1,4 @@
-﻿function focusStudent(e,id) {
+﻿function focusStudent(e, id) {
     if ($("#stactive")) {
         $("#stactive").attr("id", "");
     }
@@ -11,14 +11,14 @@
     });
     $("#text").html($("#" + e.id + " a").html());
     $("#sb button").attr('click', '').unbind('click');
-    $("#sb button").click( function () {
+    $("#sb button").click(function () {
         saveData(id);
     });
     getJDataByid(id);
 }
 
 
-function setVisibilityById(id,value) {
+function setVisibilityById(id, value) {
     $("#" + id).css("visibility", value);
 }
 
@@ -33,7 +33,7 @@ function showInfoWindow() {
     setVisibilityById("backref", "visible");
     setVisibilityById("sb", "visible");
     $("#mainform").trigger('reset')
-    drawPieChart(98, 52);
+    drawPieChart(75, 52);
 }
 
 function addingStudent() {

@@ -1,4 +1,4 @@
-function getJData() {
+﻿function getJData() {
     $.getJSON("/api/default3", pastJData);
 }
 
@@ -35,17 +35,12 @@ function insertData() {
 }
 
 function getSendingData(id) {
-    if ($("#male").is(":checked")) {
-        var sex = true;
-    } else {
-        var sex = false;
-    }
     return {
         "Id": id,
         "FName": $("[name = 'fname']").val(),
         "LName": $("[name = 'lname']").val(),
         "SName": $("[name = 'sname']").val(),
-        "Sex": sex,
+        "Sex": $("#male").is(":checked"),
         "BDate": $("[name = 'bday']").val(),
         "IncomDate": $("[name = 'incomday']").val()
     };

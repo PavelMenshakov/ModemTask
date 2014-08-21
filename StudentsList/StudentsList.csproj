@@ -124,6 +124,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\StudentsContext.cs" />
     <Compile Include="Models\Subject.cs" />
@@ -172,9 +173,11 @@
     <Content Include="Content\script.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Student.js" />
     <Content Include="Content\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Subject.js" />
     <Content Include="Content\validate.js" />
     <Content Include="Global.asax" />
     <Content Include="Views\Default2\index.html" />

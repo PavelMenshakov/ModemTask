@@ -13,11 +13,11 @@ namespace StudentsList.Controllers
     public class Default1Controller : ApiController
     {
         // GET api/default1
-        public List<Student> Get()
+        public List<Group> Get()
         {
             using (var StudentsDb = new StudentsContext())
             {
-                return StudentsDb.StudentsList.ToList();
+                return StudentsDb.Groups.ToList();
             }
         }
 
@@ -46,38 +46,12 @@ namespace StudentsList.Controllers
         }
 
         // POST api/default1
-        public void Post([FromBody]Student value)
+        public void Post([FromBody]Group value)
         {
             using (StudentsContext ctx = new StudentsContext())
             {
-                if (value.Id==-1)
-                {
-                    Student e = new Student()
-                    {
-                        FName = value.FName,
-                        SName = value.SName,
-                        LName = value.LName,
-                        BDate = value.BDate,
-                        IncomDate = value.IncomDate,
-                        Sex = value.Sex
-                    };
-                    ctx.StudentsList.Add(e);
-                    ctx.SaveChanges();
-                }
-                else
-                {
-                    var original = ctx.StudentsList.Find(value.Id);
-                    if (original != null)
-                    {
-                        original.FName = value.FName;
-                        original.SName = value.SName;
-                        original.LName = value.LName;
-                        original.BDate = value.BDate;
-                        original.IncomDate = value.IncomDate;
-                        original.Sex = value.Sex;
-                        ctx.SaveChanges();
-                    }
-                }
+                ctx.Groups.Add(value);
+                ctx.SaveChanges();
             }
         }
 
