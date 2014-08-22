@@ -180,10 +180,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Scripts\Student.js" />
+    <Content Include="Content\Scripts\Subject.js" />
     <Content Include="Content\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Scripts\Subject.js" />
     <Content Include="Content\Scripts\validate.js" />
     <Content Include="Global.asax" />
     <Content Include="Views\Default2\index.html" />
