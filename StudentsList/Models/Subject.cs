@@ -14,6 +14,8 @@ namespace StudentsList.Models
         [DataMember(Name="SubjectName")]
         public string SubjectName { get; set; }
         [DataMember(Name = "SubjectHours")]
-        public string SubjectHours { get; set; }
+        public long SubjectHours { get; set; }
+        [DataMember(Name = "Students")]
+        public ICollection<Student> Students { get; set; }
     }
 }

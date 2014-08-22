@@ -1,11 +1,14 @@
 ﻿function drawChart() {
 
     var summ = 0;
-    for (var i = 1; i < 10; i++) {
-        if ($("#obj" + i).is(":checked")) {
-            summ += parseInt($("#obj" + i).val());
+    var subjectsList = getSubjectsArray();
+    $(subjectsList)
+    subjectsList.forEach(function (value, i, arr) {
+        if ($("#subject" + value._id).is(":checked")) {
+            summ += parseInt(value._hours);
         }
-    }
+    });
+
 
     var drawingCanvas = document.getElementById("metric");
     if (drawingCanvas && drawingCanvas.getContext) {
@@ -35,12 +38,15 @@
         context.stroke();
 
         $("#chart").html("");
-        for (var i = 1; i < 10; i++) {
-            if ($("#obj" + i).is(":checked")) {
-                $("#chart").append("<div title='" + $("#obj" + i).attr("title") + "' style='float:left; height:10px; width:" + parseInt($("#obj" + i).val()) * (700 / summ) + "px;background:rgba(255, " + parseInt($("#obj" + i).val()) * 14 + ", 0, 0.94);'></div>");
+        subjectsList.forEach(function (value, i, arr) {
+            var current = $("#subject" + value._id);
+            if (current.is(":checked")) {
+                $("#chart").append("<div title='" + current.attr("title") + "' style='float:left; height:10px; width:" + parseInt(current.attr("value")) * (700 / summ) + "px;background:rgba(255, " + parseInt(current.attr("value")) * 10 + ", 0, 0.94);'></div>");
             }
-        }
+        });
+        
     }
+
 }
 
 

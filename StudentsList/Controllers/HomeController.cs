@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace StudentsList.Controllers
 {
-    public class Default2Controller : Controller
+    public class HomeController : Controller
     {
         //
         // GET: /Default2/

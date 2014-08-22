@@ -10,14 +10,19 @@ using System.Web;
 using System.Data.Entity;
 namespace StudentsList.Controllers
 {
-    public class Default1Controller : ApiController
+    public class GroupController : ApiController
     {
         // GET api/default1
-        public List<Student> Get()
+        public List<Object> Get()
         {
             using (var StudentsDb = new StudentsContext())
             {
-                return StudentsDb.StudentsList.ToList();
+                List<Object> o = new List<Object>();
+                var query = StudentsDb.Groups.Include("Students");
+                foreach (var gp in query)
+                    o.Add(gp);
+                //List<Group> g = StudentsDb.Groups.ToList();
+                return o;
             }
         }
 
@@ -28,7 +33,7 @@ namespace StudentsList.Controllers
             Student st = new Student();
             using (var StudentsDb = new StudentsContext())
             {
-                var students = from Student in StudentsDb.StudentsList
+                var students = from Student in StudentsDb.Students
                                where Student.Id == id
                                select Student;
                 foreach (var student in students)
@@ -46,11 +51,13 @@ namespace StudentsList.Controllers
         }
 
         // POST api/default1
-        public void Post([FromBody]Student value)
+        public void Post([FromBody]Group value)
         {
             using (StudentsContext ctx = new StudentsContext())
             {
-                if (value.Id == -1)
+                ctx.Groups.Add(value);
+                ctx.SaveChanges();
+           /*     if (value.Id == -1)
                 {
                     Student e = new Student()
                     {
@@ -61,12 +68,12 @@ namespace StudentsList.Controllers
                         IncomDate = value.IncomDate,
                         Sex = value.Sex
                     };
-                    ctx.StudentsList.Add(e);
+                    ctx.Students.Add(e);
                     ctx.SaveChanges();
                 }
                 else
                 {
-                    var original = ctx.StudentsList.Find(value.Id);
+                    var original = ctx.Students.Find(value.Id);
                     if (original != null)
                     {
                         original.FName = value.FName;
@@ -77,7 +84,7 @@ namespace StudentsList.Controllers
                         original.Sex = value.Sex;
                         ctx.SaveChanges();
                     }
-                }
+                }*/
             }
         }
 
@@ -92,10 +99,10 @@ namespace StudentsList.Controllers
         {
             using (StudentsContext ctx = new StudentsContext())
             {
-                var stud = (from Student in ctx.StudentsList
+                var stud = (from Student in ctx.Students
                             where Student.Id == id
                             select Student).FirstOrDefault();
-                ctx.StudentsList.Remove(stud);
+                ctx.Students.Remove(stud);
                 ctx.SaveChanges();
             }
         }

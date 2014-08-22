@@ -33,6 +33,7 @@ function showInfoWindow() {
     setVisibilityById("backref", "visible");
     setVisibilityById("sb", "visible");
     $("#mainform").trigger('reset')
+    getSubjects();
     drawPieChart(75, 52);
 }
 
@@ -48,4 +49,15 @@ function addingStudent() {
     $("#sb button").click(function () {
         insertData();
     });
+}
+
+function showSubjectWindow() {
+    $("body").append("<div id='subjectbox'><h2>Добавление предмета</h2><br /><input type='text' name='SubjectName' /><br /><input type='text' name='SubjectHours' /><br /><input type='button' value='Добавить' onclick='addSubject()'/></div>")
+}
+
+function addSubject() {
+    var newSubject = new Subject();
+    newSubject.getWindowValue();
+    newSubject.addSubject();
+    $("#subjectbox").remove();
 }

@@ -70,6 +70,7 @@ function pastData(data) {
     } else {
         $("#female").prop('checked', true);
     }
+    
 }
 
 function pastJData(data) {
