@@ -1,5 +1,5 @@
-﻿function Student(id, fName, lName, sName, sex, bDate, incomDate, subjects) {
-    this._id = id;
+﻿function Student(fName, lName, sName, sex, bDate, incomDate, subjects) {
+    this._id = 0;
     this._fName = fName;
     this._lName = lName;
     this._sName = sName;
@@ -64,7 +64,7 @@
 
     this.getJSONObject = function () {
         return {
-            "Id": this._id,
+            "Id": -1,//this._id,
             "FName": this._fName,
             "LName": this._lName,
             "SName": this._sName,

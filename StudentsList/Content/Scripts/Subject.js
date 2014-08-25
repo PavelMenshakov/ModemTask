@@ -1,5 +1,5 @@
-﻿function Subject(Id, Name, Hours) {
-    this._id = Id;
+﻿function Subject(Name, Hours) {
+    this._id = 0;
     this._name = Name;
     this._hours = Hours;
 
@@ -30,7 +30,8 @@ Subject.getSubjectsArray = function () {
     var subjects = new Array();
     var list = $("#odjectsTable").find("input");
     list.each(function () {
-        var sub = new Subject(this.id.slice(7), this.title, this.value);
+        var sub = new Subject(this.title, this.value);
+        sub._id = this.id.slice(7);
         subjects.push(sub);
     });
     console.log(subjects);

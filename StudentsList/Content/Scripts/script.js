@@ -30,6 +30,6 @@ function addingStudent() {
     }
     $("#sb button").attr('onclick', '').unbind('click');
     $("#sb button").click(function () {
-        insertData();
+        Student.insertNew();
     });
 }
