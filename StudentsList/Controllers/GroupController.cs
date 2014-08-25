@@ -57,34 +57,7 @@ namespace StudentsList.Controllers
             {
                 ctx.Groups.Add(value);
                 ctx.SaveChanges();
-           /*     if (value.Id == -1)
-                {
-                    Student e = new Student()
-                    {
-                        FName = value.FName,
-                        SName = value.SName,
-                        LName = value.LName,
-                        BDate = value.BDate,
-                        IncomDate = value.IncomDate,
-                        Sex = value.Sex
-                    };
-                    ctx.Students.Add(e);
-                    ctx.SaveChanges();
-                }
-                else
-                {
-                    var original = ctx.Students.Find(value.Id);
-                    if (original != null)
-                    {
-                        original.FName = value.FName;
-                        original.SName = value.SName;
-                        original.LName = value.LName;
-                        original.BDate = value.BDate;
-                        original.IncomDate = value.IncomDate;
-                        original.Sex = value.Sex;
-                        ctx.SaveChanges();
-                    }
-                }*/
+           /*  */
             }
         }
 

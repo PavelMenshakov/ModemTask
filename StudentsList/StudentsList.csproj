@@ -118,12 +118,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\StudentsList.Models.StudentsContext.mdf" />
-    <Content Include="App_Data\StudentsList.Models.StudentsContext_log.ldf">
-      <DependentUpon>StudentsList.Models.StudentsContext.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\Scripts\Group.js" />
     <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

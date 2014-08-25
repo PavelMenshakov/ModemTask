@@ -1,31 +1,32 @@
-function Subject(subjectId, subjectName, subjectHours) {
-    this._id = subjectId;
-    this._name = subjectName;
-    this._hours = subjectHours;
-    this.getJSONString = function () {
+﻿function Subject(Id, Name, Hours) {
+    this._id = Id;
+    this._name = Name;
+    this._hours = Hours;
+
+    this.getJSONObject = function () {
         return {
-            "SubjectId": this._id,
-            "SubjectName": this._name,
-            "SubjectHours": this._hours
+            "Id": this._id,
+            "Name": this._name,
+            "Hours": this._hours
         };
     }
+
     this.addSubject = function () {
         $.ajax({
             type: 'POST',
             url: '/api/subject',
-            data: this.getJSONString(),
-            success: function () {
-                getSubjects();
-            }
+            data: this.getJSONObject(),
+            success: Subject.getAllData()
         });
     }
+
     this.getWindowValue = function () {
         this._name = $("[name = 'SubjectName']").val();
         this._hours = $("[name = 'SubjectHours']").val();
     }
 }
 
-function getSubjectsArray() {
+Subject.getSubjectsArray = function () {
     var subjects = new Array();
     var list = $("#odjectsTable").find("input");
     list.each(function () {
@@ -36,13 +37,54 @@ function getSubjectsArray() {
     return subjects;
 }
 
-function getSubjects() {
-    $.getJSON("/api/Subject", pastJSubjects);
+Subject.getAllData = function () {
+    $.getJSON("/api/Subject", Subject.pasteAllData);
 }
 
-function pastJSubjects(data) {
-    $("#odjectsTable").html("");
+Subject.showInsertWindow = function () {
+    $("body").append(
+        $("<div/>").attr("id", "subjectbox").append(
+            $("<h2/>").text('Добавление предмета'),
+            $("<br/>"),
+            $("<input/>", {
+                type: 'text',
+                name: 'SubjectName'
+            }),
+            $("<br/>"),
+            $("<input/>", {
+                type: 'text',
+                name: 'SubjectHours'
+            }),
+            $("<br/>"),
+            $("<input/>", {
+                type: 'button',
+                value: 'Добавить'
+            }).click(Subject.insertNew)
+        )
+    );
+
+}
+
+Subject.pasteAllData = function (data) {
+    $("#odjectsTable").empty();
     for (var i = 0; i < data.length; i++) {
-        $("#odjectsTable").append("<div><input onchange='drawChart()' type='checkbox'  title='" + data[i].SubjectName + "' id='subject" + data[i].SubjectId + "' value='" + data[i].SubjectHours + "'/>" + data[i].SubjectName + "</div>");
+        $("#odjectsTable").append(
+            $("<div/>").append(
+                $("<input/>", {
+                    type: 'checkbox',
+                    title: data[i].Name,
+                    id: 'subject' + data[i].Id,
+                    value: data[i].Hours,
+                }).change(drawChart),
+                data[i].Name
+            )
+        );
     }
+}
+
+Subject.insertNew = function () {
+    var newSubject = new Subject();
+    newSubject.getWindowValue();
+    newSubject.addSubject();
+    $("#subjectbox").remove();
 }

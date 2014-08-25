@@ -1,21 +1,4 @@
-﻿function focusStudent(e, id) {
-    if ($("#stactive")) {
-        $("#stactive").attr("id", "");
-    }
-    e.id = "stactive";
-    showInfoWindow();
-    $("#delete").css("visibility", "visible");
-    $("#delete").attr('onclick', '').unbind('click');
-    $("#delete").click(function () {
-        deleteData(id);
-    });
-    $("#text").html($("#" + e.id + " a").html());
-    $("#sb button").attr('click', '').unbind('click');
-    $("#sb button").click(function () {
-        saveData(id);
-    });
-    getJDataByid(id);
-}
+﻿
 
 
 function setVisibilityById(id, value) {
@@ -33,7 +16,7 @@ function showInfoWindow() {
     setVisibilityById("backref", "visible");
     setVisibilityById("sb", "visible");
     $("#mainform").trigger('reset')
-    getSubjects();
+    Subject.getAllData();
     drawPieChart(75, 52);
 }
 
@@ -49,15 +32,4 @@ function addingStudent() {
     $("#sb button").click(function () {
         insertData();
     });
-}
-
-function showSubjectWindow() {
-    $("body").append("<div id='subjectbox'><h2>Добавление предмета</h2><br /><input type='text' name='SubjectName' /><br /><input type='text' name='SubjectHours' /><br /><input type='button' value='Добавить' onclick='addSubject()'/></div>")
-}
-
-function addSubject() {
-    var newSubject = new Subject();
-    newSubject.getWindowValue();
-    newSubject.addSubject();
-    $("#subjectbox").remove();
 }

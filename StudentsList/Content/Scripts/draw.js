@@ -1,7 +1,7 @@
 ﻿function drawChart() {
 
     var summ = 0;
-    var subjectsList = getSubjectsArray();
+    var subjectsList = Subject.getSubjectsArray();
     $(subjectsList)
     subjectsList.forEach(function (value, i, arr) {
         if ($("#subject" + value._id).is(":checked")) {

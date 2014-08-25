@@ -29,12 +29,12 @@ namespace StudentsList.Controllers
             using (var StudentsDb = new StudentsContext())
             {
                 var subjectq = from Subject in StudentsDb.Subjects
-                               where Subject.SubjectId == id
+                               where Subject.Id == id
                                select Subject;
                 foreach (var subject in subjectq)
                 {
-                    Sub.SubjectName = subject.SubjectName;
-                    Sub.SubjectHours = subject.SubjectHours;
+                    Sub.Name = subject.Name;
+                    Sub.Hours = subject.Hours;
 
                 }
             }
