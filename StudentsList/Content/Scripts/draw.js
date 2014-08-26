@@ -2,14 +2,19 @@
 
     var summ = 0;
     var subjectsList = Subject.getSubjectsArray();
-    $(subjectsList)
-    subjectsList.forEach(function (value, i, arr) {
-        if ($("#subject" + value._id).is(":checked")) {
-            summ += parseInt(value._hours);
-        }
+    $("#chart").empty();
+    $(subjectsList).each(function () {
+        summ += parseInt(this.Hours);
     });
 
-
+    $(subjectsList).each(function () {
+        $("#chart").append(
+            $("<div/>", {
+                title: this.Name,
+                style: "float:left; height:10px; width:" + parseInt(this.Hours) * (700 / summ) +
+                    "px;background:rgba(255, " + parseInt(this.Hours) * 10 + ", 0, 0.94);"
+            }));
+    });
     var drawingCanvas = document.getElementById("metric");
     if (drawingCanvas && drawingCanvas.getContext) {
         var context = drawingCanvas.getContext('2d');
@@ -37,14 +42,8 @@
         context.closePath();
         context.stroke();
 
-        $("#chart").html("");
-        subjectsList.forEach(function (value, i, arr) {
-            var current = $("#subject" + value._id);
-            if (current.is(":checked")) {
-                $("#chart").append("<div title='" + current.attr("title") + "' style='float:left; height:10px; width:" + parseInt(current.attr("value")) * (700 / summ) + "px;background:rgba(255, " + parseInt(current.attr("value")) * 10 + ", 0, 0.94);'></div>");
-            }
-        });
-        
+
+
     }
 
 }

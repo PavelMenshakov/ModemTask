@@ -40,25 +40,25 @@
 
     this.printStudent = function () {
         $(table).append(
-           $("<tr/>").append(
-               $("<td/>").append(
-                   $("<div/>").click(function () {
-                       focusStudent(this, data[i].id)
-                   }).append(
-                       $("<a/>").attr("class", "student").text(data[i].LName + " " + data[i].FName + " " + data[i].SName)
-                   )
-               )
-           )
-       );
+            $("<tr/>").append(
+                $("<td/>").append(
+                    $("<div/>").click(function () {
+                        focusStudent(this, data[i].id)
+                    }).append(
+                        $("<a/>").attr("class", "student").text(data[i].LName + " " + data[i].FName + " " + data[i].SName)
+                    )
+                )
+            )
+        );
     }
 
     this.getWindowValue = function (id) {
         this._id = id;
-        this._fName= $("[name = 'fname']").val();
-        this._lName= $("[name = 'lname']").val();
-        this._sName= $("[name = 'sname']").val();
-        this._sex= $("#male").is(":checked");
-        this._bDate= $("[name = 'bday']").val();
+        this._fName = $("[name = 'fname']").val();
+        this._lName = $("[name = 'lname']").val();
+        this._sName = $("[name = 'sname']").val();
+        this._sex = $("#male").is(":checked");
+        this._bDate = $("[name = 'bday']").val();
         this._incomDate = $("[name = 'incomday']").val();
     }
 
@@ -76,6 +76,7 @@
             };
         } else {
             return {
+                "Id": "-1",
                 "FName": this._fName,
                 "LName": this._lName,
                 "SName": this._sName,
@@ -100,7 +101,7 @@ Student.pasteAllData = function (data) {
         $(table).append(
             $("<tr/>").append(
                 $("<td/>").append(
-                    $("<div/>").attr("onclick", "Student.focus(this,"+this.Id+")").append(
+                    $("<div/>").attr("onclick", "Student.focus(this," + this.Id + ")").append(
                         $("<a/>").attr("class", "student").text(this.LName + " " + this.FName + " " + this.SName)
                     ).attr("id", this.Id)
                 )
@@ -153,7 +154,7 @@ Student.delete = function (id) {
     });
 }
 
-Student.insertNew = function() {
+Student.insertNew = function () {
     var st = new Student();
     st.addSubjects();
     st.add();
@@ -168,12 +169,12 @@ Student.getById = function (id) {
     $.getJSON("/api/student/" + id, Student.pasteData);
 }
 
-Student.focus = function(e, id) {
+Student.focus = function (e, id) {
     if ($("#stactive")) {
         $("#stactive").attr("id", "");
     }
     e.id = "stactive";
-    showInfoWindow();
+    Student.showInfoWindow();
     $("#delete").css("visibility", "visible");
     $("#delete").attr('onclick', '').unbind('click');
     $("#delete").click(function () {
@@ -185,4 +186,30 @@ Student.focus = function(e, id) {
         Student.update(id);
     });
     Student.getById(id);
+}
+
+
+Student.showInfoWindow = function () {
+    $("#stlist").attr("class", "stlista");
+    $("#studentinf").css("display", "block");
+    setVisibilityById("backref", "visible");
+    setVisibilityById("sb", "visible");
+    $("#mainform").trigger('reset')
+    Subject.getAllData();
+    drawPieChart(75, 52);
+}
+
+
+Student.generationStudentAddW = function () {
+    Student.showInfoWindow();
+    $("#text").html("Добавление студента")
+    setVisibilityById("delete", "hidden");
+
+    if ($("#stactive")) {
+        $("#stactive").attr("id", "");
+    }
+    $("#sb button").attr('onclick', '').unbind('click');
+    $("#sb button").click(function () {
+        Student.insertNew();
+    });
 }

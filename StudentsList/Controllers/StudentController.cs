@@ -54,17 +54,23 @@ namespace StudentsList.Controllers
         {
             using (StudentsContext ctx = new StudentsContext())
             {
-
                 if (value.Id == -1)
                 {
-                    Student newSt = new Student();
-                    newSt.FName = value.FName;
-                    newSt.SName = value.SName;
-                    newSt.LName = value.LName;
-                    newSt.BDate = value.BDate;
-                    newSt.IncomDate = value.IncomDate;
-                    newSt.Sex = value.Sex;
-                    ctx.Students.At(value);
+                    ICollection<Subject> subCol = new List<Subject>();
+                    foreach (var sub in value.Subjects)
+                    {
+                        subCol.Add(ctx.Subjects.Find(sub.Id));
+                    }
+                    ctx.Students.Add(new Student
+                    {
+                        FName = value.FName,
+                        SName = value.SName,
+                        LName = value.LName,
+                        Sex = value.Sex,
+                        IncomDate = value.IncomDate,
+                        BDate = value.BDate,
+                        Subjects = subCol
+                    });
                     ctx.SaveChanges();
                 }
                 else

@@ -13,38 +13,38 @@ namespace StudentsList.Controllers
     public class GroupController : ApiController
     {
         // GET api/default1
-        public List<Object> Get()
+        public List<Group> Get()
         {
             using (var StudentsDb = new StudentsContext())
             {
-                List<Object> o = new List<Object>();
-                var query = StudentsDb.Groups.Include("Students");
-                foreach (var gp in query)
-                    o.Add(gp);
-                //List<Group> g = StudentsDb.Groups.ToList();
-                return o;
+                return StudentsDb.Groups.ToList();
             }
         }
 
 
         // GET api/default1/3
-        public Student Get(int id)
+        public List<Student> Get(int id)
         {
-            Student st = new Student();
+            List<Student> st = new List<Student>();
             using (var StudentsDb = new StudentsContext())
             {
-                var students = from Student in StudentsDb.Students
-                               where Student.Id == id
-                               select Student;
-                foreach (var student in students)
+                var group =
+                    StudentsDb.Groups.Find(id);
+                if (group.Students!=null)
                 {
-                    st.FName = student.FName;
-                    st.LName = student.LName;
-                    st.SName = student.SName;
-                    st.BDate = student.BDate;
-                    st.IncomDate = student.IncomDate;
-                    st.Sex = student.Sex;
-
+                    foreach (var student in group.Students)
+                    {
+                        st.Add(new Student
+                        {
+                            FName = student.FName,
+                            LName = student.LName,
+                            SName = student.SName,
+                            BDate = student.BDate,
+                            IncomDate = student.IncomDate,
+                            Sex = student.Sex,
+                            Id = student.Id
+                        });
+                    }
                 }
             }
             return st;

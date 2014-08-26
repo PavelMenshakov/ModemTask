@@ -1,5 +1,0 @@
-﻿function getJData() {
-    Student.getAllData();
-}
-
-
