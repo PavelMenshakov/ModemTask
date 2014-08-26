@@ -1,4 +1,4 @@
-﻿$(document).ready(Student.getAllData());
+﻿$(document).ready(Group.getAllData());
 
 function setVisibilityById(id, value) {
     $("#" + id).css("visibility", value);

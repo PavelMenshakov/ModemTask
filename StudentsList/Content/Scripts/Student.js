@@ -90,8 +90,8 @@
 
 }
 
-Student.getAllData = function () {
-    $.getJSON("/api/student", Student.pasteAllData);
+Student.getAllData = function (id) {
+    $.getJSON("/api/group/"+id, Student.pasteAllData);
 }
 
 Student.pasteAllData = function (data) {

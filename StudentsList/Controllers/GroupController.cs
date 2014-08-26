@@ -28,24 +28,21 @@ namespace StudentsList.Controllers
             List<Student> st = new List<Student>();
             using (var StudentsDb = new StudentsContext())
             {
-                var group =
-                    StudentsDb.Groups.Find(id);
-                if (group.Students!=null)
+                var group = StudentsDb.Groups.Include("Students").FirstOrDefault(t => t.Id == id);
+                foreach (var student in group.Students)
                 {
-                    foreach (var student in group.Students)
+                    st.Add(new Student
                     {
-                        st.Add(new Student
-                        {
-                            FName = student.FName,
-                            LName = student.LName,
-                            SName = student.SName,
-                            BDate = student.BDate,
-                            IncomDate = student.IncomDate,
-                            Sex = student.Sex,
-                            Id = student.Id
-                        });
-                    }
+                        FName = student.FName,
+                        LName = student.LName,
+                        SName = student.SName,
+                        BDate = student.BDate,
+                        IncomDate = student.IncomDate,
+                        Sex = student.Sex,
+                        Id = student.Id
+                    });
                 }
+
             }
             return st;
         }
