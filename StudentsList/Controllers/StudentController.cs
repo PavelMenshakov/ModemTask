@@ -19,7 +19,7 @@ namespace StudentsList.Controllers
             using (var StudentsDb = new StudentsContext())
             {
                 List<Student> st = new List<Student>();
-                var query = StudentsDb.Students.Include("Subjects");
+                var query = StudentsDb.Students; //Include("Subjects");
                 foreach (var gp in query)
                     st.Add(gp);
                 return st;
@@ -57,7 +57,14 @@ namespace StudentsList.Controllers
 
                 if (value.Id == -1)
                 {
-                    ctx.Students.Add(value);
+                    Student newSt = new Student();
+                    newSt.FName = value.FName;
+                    newSt.SName = value.SName;
+                    newSt.LName = value.LName;
+                    newSt.BDate = value.BDate;
+                    newSt.IncomDate = value.IncomDate;
+                    newSt.Sex = value.Sex;
+                    ctx.Students.At(value);
                     ctx.SaveChanges();
                 }
                 else

@@ -30,11 +30,12 @@ Subject.getSubjectsArray = function () {
     var subjects = new Array();
     var list = $("#odjectsTable").find("input");
     list.each(function () {
-        var sub = new Subject(this.title, this.value);
-        sub._id = this.id.slice(7);
-        subjects.push(sub);
+        if (this.checked) {
+            var sub = new Subject(this.title, this.value);
+            sub._id = this.id.slice(7);
+            subjects.push(sub.getJSONObject());
+        }
     });
-    console.log(subjects);
     return subjects;
 }
 
@@ -60,7 +61,13 @@ Subject.showInsertWindow = function () {
             $("<input/>", {
                 type: 'button',
                 value: 'Добавить'
-            }).click(Subject.insertNew)
+            }).click(Subject.insertNew),
+            $("<input/>", {
+                type: 'button',
+                value: 'Отмена'
+            }).click(function () {
+                $("#subjectbox").remove()
+            })
         )
     );
 

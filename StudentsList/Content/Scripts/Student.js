@@ -1,4 +1,4 @@
-﻿function Student(fName, lName, sName, sex, bDate, incomDate, subjects) {
+﻿function Student(fName, lName, sName, sex, bDate, incomDate) {
     this._id = 0;
     this._fName = fName;
     this._lName = lName;
@@ -6,10 +6,10 @@
     this._sex = sex;
     this._bDate = bDate;
     this._incomDate = incomDate;
-    this._subjects = subjects;
+    this._subjects = 0;
 
-    this.addSubject = function (newSubject) {
-        this._subjects.push(newSubject);
+    this.addSubjects = function () {
+        this._subjects = Subject.getSubjectsArray();
     };
 
     this.add = function () {
@@ -63,16 +63,28 @@
     }
 
     this.getJSONObject = function () {
-        return {
-            "Id": -1,//this._id,
-            "FName": this._fName,
-            "LName": this._lName,
-            "SName": this._sName,
-            "Sex": this._sex,
-            "BDate": this._bDate,
-            "IncomDate": this._incomDate,
-            "Subjects": this._subjects
-        };
+        if (this._id) {
+            return {
+                "Id": this._id,
+                "FName": this._fName,
+                "LName": this._lName,
+                "SName": this._sName,
+                "Sex": this._sex,
+                "BDate": this._bDate,
+                "IncomDate": this._incomDate,
+                "Subjects": this._subjects
+            };
+        } else {
+            return {
+                "FName": this._fName,
+                "LName": this._lName,
+                "SName": this._sName,
+                "Sex": this._sex,
+                "BDate": this._bDate,
+                "IncomDate": this._incomDate,
+                "Subjects": this._subjects
+            };
+        }
     }
 
 }
@@ -135,12 +147,15 @@ Student.delete = function (id) {
         url: '/api/student/' + id,
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
-        success: Student.getAllData
+        success: function () {
+            Student.getAllData()
+        }
     });
 }
 
 Student.insertNew = function() {
     var st = new Student();
+    st.addSubjects();
     st.add();
 }
 
