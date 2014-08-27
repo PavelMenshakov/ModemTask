@@ -48,13 +48,30 @@ namespace StudentsList.Controllers
         }
 
         // POST api/default1
-        public void Post([FromBody]Group value)
+        public void Post([FromBody]Student value)
         {
             using (StudentsContext ctx = new StudentsContext())
             {
-                ctx.Groups.Add(value);
+                ICollection<Subject> subCol = new List<Subject>();
+                foreach (var sub in value.Subjects)
+                {
+                    subCol.Add(ctx.Subjects.Find(sub.Id));
+                }
+                var original = ctx.Groups.Include("Students").First(g => g.Id == value.Id);
+
+                original.Students.Add(new Student
+                {
+                    FName = value.FName,
+                    SName = value.SName,
+                    LName = value.LName,
+                    Sex = value.Sex,
+                    IncomDate = value.IncomDate,
+                    BDate = value.BDate,
+                    Subjects = subCol
+                });
                 ctx.SaveChanges();
-           /*  */
+
+
             }
         }
 

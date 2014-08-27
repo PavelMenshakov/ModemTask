@@ -1,59 +1,46 @@
-﻿function Student(fName, lName, sName, sex, bDate, incomDate) {
-    this._id = 0;
-    this._fName = fName;
-    this._lName = lName;
-    this._sName = sName;
-    this._sex = sex;
-    this._bDate = bDate;
-    this._incomDate = incomDate;
+﻿function Student(data) {
+    data || (data = 0);
+    this._id = data.Id;
+    this._fName = data.FName;
+    this._lName = data.LName;
+    this._sName = data.SName;
+    this._sex = data.Sex;
+    this._bDate = data.BDate;
+    this._incomDate = data.IncomDate;
     this._subjects = 0;
 
     this.addSubjects = function () {
         this._subjects = Subject.getSubjectsArray();
     };
 
-    this.add = function () {
-        if (!validateFields()) {
-            return;
+    this.save = function (url) {
+        if (validateFields()) {
+            this.getWindowValue();
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: this.getJSONObject(),
+                success: function () {
+                    Student.getAllData($(".grouplist select").val())
+                }
+            });
         }
-        this.getWindowValue();
-        $.ajax({
-            type: 'POST',
-            url: '/api/student',
-            data: this.getJSONObject(),
-            success: Student.getAllData()
-        });
-    }
-
-    this.save = function (id) {
-        if (!validateFields()) {
-            return;
-        }
-        this.getWindowValue(id);
-        $.ajax({
-            type: 'POST',
-            url: '/api/student/' + id,
-            data: this.getJSONObject(),
-            success: Student.getAllData()
-        });
     }
 
     this.printStudent = function () {
+        var table = $("#stlist").find("table");
         $(table).append(
             $("<tr/>").append(
                 $("<td/>").append(
-                    $("<div/>").click(function () {
-                        focusStudent(this, data[i].id)
-                    }).append(
-                        $("<a/>").attr("class", "student").text(data[i].LName + " " + data[i].FName + " " + data[i].SName)
+                    $("<div student-id=" + this._id + "/>").click(Student.focus).append(
+                        $("<a/>").attr("class", "student").text(this._lName + " " + this._fName + " " + this._sName)
                     )
                 )
             )
         );
     }
 
-    this.getWindowValue = function (id) {
-        this._id = id;
+    this.getWindowValue = function () {
         this._fName = $("[name = 'fname']").val();
         this._lName = $("[name = 'lname']").val();
         this._sName = $("[name = 'sname']").val();
@@ -63,32 +50,21 @@
     }
 
     this.getJSONObject = function () {
-        if (this._id) {
-            return {
-                "Id": this._id,
-                "FName": this._fName,
-                "LName": this._lName,
-                "SName": this._sName,
-                "Sex": this._sex,
-                "BDate": this._bDate,
-                "IncomDate": this._incomDate,
-                "Subjects": this._subjects
-            };
-        } else {
-            return {
-                "Id": "-1",
-                "FName": this._fName,
-                "LName": this._lName,
-                "SName": this._sName,
-                "Sex": this._sex,
-                "BDate": this._bDate,
-                "IncomDate": this._incomDate,
-                "Subjects": this._subjects
-            };
-        }
+        var id = this._id || $(".grouplist select").val();
+        return {
+            "Id": id,
+            "FName": this._fName,
+            "LName": this._lName,
+            "SName": this._sName,
+            "Sex": this._sex,
+            "BDate": this._bDate,
+            "IncomDate": this._incomDate,
+            "Subjects": this._subjects
+        };
     }
-
 }
+
+
 
 Student.getAllData = function (id) {
     $.getJSON("/api/group/"+id, Student.pasteAllData);
@@ -97,35 +73,13 @@ Student.getAllData = function (id) {
 Student.pasteAllData = function (data) {
     var table = $("#stlist").find("table");
     $(table).empty();
-    $(data).each(function () {
-        $(table).append(
-            $("<tr/>").append(
-                $("<td/>").append(
-                    $("<div/>").attr("onclick", "Student.focus(this," + this.Id + ")").append(
-                        $("<a/>").attr("class", "student").text(this.LName + " " + this.FName + " " + this.SName)
-                    ).attr("id", this.Id)
-                )
-            )
-        );
-    });
-}
-
-Student.pasteAllDataV2 = function (data) {
-    var table = $("#stlist").find("table");
-    $(table).empty();
     var students = new Array();
     $(data).each(function () {
-        var st = new Student(this.id,
-            this.FName,
-            this.LName,
-            this.SName,
-            this.Sex,
-            this.BDate,
-            this.IncomDate,
-            this.Subjects)
-        students.push(st);
+        students.push(new Student(this));
     });
-    $(students).each(this.printStudent);
+    $(students).each(function () {
+        this.printStudent();
+    });
 }
 
 Student.pasteData = function (data) {
@@ -139,7 +93,9 @@ Student.pasteData = function (data) {
     } else {
         $("#female").prop('checked', true);
     }
-
+    $(data.Subjects).each(function () {
+        $('#subject' + this.Id).attr("checked",true).change();
+    });
 }
 
 Student.delete = function (id) {
@@ -154,62 +110,59 @@ Student.delete = function (id) {
     });
 }
 
-Student.insertNew = function () {
+Student.update = function (url,id) {
     var st = new Student();
+    st._id = id;
     st.addSubjects();
-    st.add();
-}
-
-Student.update = function (Id) {
-    var st = new Student();
-    st.save(Id);
+    st.save(url);
 }
 
 Student.getById = function (id) {
     $.getJSON("/api/student/" + id, Student.pasteData);
 }
 
-Student.focus = function (e, id) {
+Student.focus = function (e) {
     if ($("#stactive")) {
         $("#stactive").attr("id", "");
     }
-    e.id = "stactive";
-    Student.showInfoWindow();
-    $("#delete").css("visibility", "visible");
-    $("#delete").attr('onclick', '').unbind('click');
+    id = $(e.currentTarget).attr("student-id");
+    e.currentTarget.id = "stactive";
+    Student.showInfoPanel();
+    $("#delete").visible();
+    $("#delete").unbind('click');
     $("#delete").click(function () {
         Student.delete(id);
     });
-    $("#text").html($("#" + e.id + " a").html());
-    $("#sb").find("button").attr('click', '').unbind('click');
+    $("#text").html($("#" + e.currentTarget.id + " a").html());
+    $("#sb").find("button").unbind('click');
     $("#sb").find("button").click(function () {
-        Student.update(id);
+        Student.update("api/student/", id);
     });
     Student.getById(id);
 }
 
 
-Student.showInfoWindow = function () {
+Student.showInfoPanel = function () {
     $("#stlist").attr("class", "stlista");
     $("#studentinf").css("display", "block");
-    setVisibilityById("backref", "visible");
-    setVisibilityById("sb", "visible");
-    $("#mainform").trigger('reset')
+    $("#backref").visible();
+    $("#sb").visible();
+    $("#mainform").trigger('reset');
     Subject.getAllData();
     drawPieChart(75, 52);
 }
 
 
-Student.generationStudentAddW = function () {
-    Student.showInfoWindow();
+Student.showAddPanel = function () {
+    Student.showInfoPanel();
     $("#text").html("Добавление студента")
-    setVisibilityById("delete", "hidden");
+    $("#delete").invisible();
 
     if ($("#stactive")) {
         $("#stactive").attr("id", "");
     }
-    $("#sb button").attr('onclick', '').unbind('click');
+    $("#sb button").unbind('click');
     $("#sb button").click(function () {
-        Student.insertNew();
+        Student.update("/api/group/")
     });
 }

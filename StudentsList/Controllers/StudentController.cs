@@ -32,18 +32,28 @@ namespace StudentsList.Controllers
             Student st = new Student();
             using (var StudentsDb = new StudentsContext())
             {
-                var students = from Student in StudentsDb.Students
+                var students = from Student in StudentsDb.Students.Include("Subjects")
                                where Student.Id == id
                                select Student;
                 foreach (var student in students)
                 {
+                    ICollection<Subject> subCol = new List<Subject>();
+                    foreach (var sub in student.Subjects)
+                    {
+                        subCol.Add(new Subject
+                        {
+                            Id = sub.Id,
+                            Name = sub.Name,
+                            Hours = sub.Hours
+                        });
+                    }
                     st.FName = student.FName;
                     st.LName = student.LName;
                     st.SName = student.SName;
                     st.BDate = student.BDate;
                     st.IncomDate = student.IncomDate;
                     st.Sex = student.Sex;
-
+                    st.Subjects = subCol;
                 }
             }
             return st;
@@ -52,42 +62,32 @@ namespace StudentsList.Controllers
         // POST api/student
         public void Post([FromBody]Student value)
         {
+
             using (StudentsContext ctx = new StudentsContext())
             {
-                if (value.Id == -1)
+                ICollection<Subject> subCol = new List<Subject>();
+                if (value.Subjects != null)
                 {
-                    ICollection<Subject> subCol = new List<Subject>();
                     foreach (var sub in value.Subjects)
                     {
                         subCol.Add(ctx.Subjects.Find(sub.Id));
                     }
-                    ctx.Students.Add(new Student
-                    {
-                        FName = value.FName,
-                        SName = value.SName,
-                        LName = value.LName,
-                        Sex = value.Sex,
-                        IncomDate = value.IncomDate,
-                        BDate = value.BDate,
-                        Subjects = subCol
-                    });
+                }
+                var original = ctx.Students.Include("Subjects").First(s=>s.Id == value.Id);
+                if (original != null)
+                {
+                    original.FName = value.FName;
+                    original.SName = value.SName;
+                    original.LName = value.LName;
+                    original.BDate = value.BDate;
+                    original.IncomDate = value.IncomDate;
+                    original.Sex = value.Sex;
+                    original.Subjects = subCol;
                     ctx.SaveChanges();
                 }
-                else
-                {
-                    var original = ctx.Students.Find(value.Id);
-                    if (original != null)
-                    {
-                        original.FName = value.FName;
-                        original.SName = value.SName;
-                        original.LName = value.LName;
-                        original.BDate = value.BDate;
-                        original.IncomDate = value.IncomDate;
-                        original.Sex = value.Sex;
-                        ctx.SaveChanges();
-                    }
-                }
+
             }
+            
         }
 
         // PUT api/student/5

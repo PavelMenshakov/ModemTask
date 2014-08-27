@@ -6,18 +6,18 @@
     var dateFlmes = new Array("valmb", "valmi");
     for (var i = 0; i < nameFl.length; i++) {
         if ($("[name = '" + nameFl[i] + "']").val().length == 0) {
-            setVisibilityById(nameFlMes[i], "visible");
+            $("#"+nameFlMes[i]).visible();
             flag = false;
         } else {
-            setVisibilityById(nameFlMes[i], "hidden");
+            $("#" + nameFlMes[i]).invisible();
         };
     }
     for (var i = 0; i < dateFl.length; i++) {
         if (!validateDate($("[name = " + dateFl[i] + "]"))) {
-            setVisibilityById(dateFlmes[i], "visible");
+            $("#" + dateFlmes[i]).visible();
             flag = false;
         } else {
-            setVisibilityById(dateFlmes[i], "hidden");
+            $("#" + dateFlmes[i]).invisible();
         };
     }
     return flag;

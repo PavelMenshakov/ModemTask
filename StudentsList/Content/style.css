@@ -288,6 +288,7 @@ tr {
 }
 
 #delete {
+    cursor: pointer;
     margin: 30px 25px 30px 0;
     float: right;
     text-decoration: underline;
@@ -381,6 +382,7 @@ input[type=text]:hover {
     float: right;
     text-decoration: underline;
     color: #2A62B9;
+    cursor: pointer;
 }
 
 #diagramd {

@@ -16,7 +16,7 @@
             type: 'POST',
             url: '/api/subject',
             data: this.getJSONObject(),
-            success: Subject.getAllData()
+            success: Subject.getAllData
         });
     }
 
@@ -28,13 +28,11 @@
 
 Subject.getSubjectsArray = function () {
     var subjects = new Array();
-    var list = $("#odjectsTable").find("input");
+    var list = $("#odjectsTable input:checked");
     list.each(function () {
-        if (this.checked) {
             var sub = new Subject(this.title, this.value);
             sub._id = this.id.slice(7);
             subjects.push(sub.getJSONObject());
-        }
     });
     return subjects;
 }

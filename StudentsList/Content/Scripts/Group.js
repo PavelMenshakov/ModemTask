@@ -1,6 +1,6 @@
-﻿function Group(groupId, groupName) {
-    this.id = groupId;
-    this.name = groupName;
+﻿function Group(data) {
+    this.id = data.Id;
+    this.name = data.Name;
     this.students = 0;
     this.getJSONString = function () {
         return {
@@ -18,13 +18,10 @@ Group.getAllData = function () {
 Group.pasteAllData = function (data) {
     var list = new Array();
     $(data).each(function () {
-        list.push(new Group(this.Id, this.Name));
+        list.push(new Group(this));
     });
-    var s = $("<select id=\"gl\" />").change(function () {
-        $("select option:selected").each(function () {
-            groupId = $(this).val();
-            Student.getAllData(groupId);
-        })
+    var s = $("<select/>").change(function () {
+            Student.getAllData($(this).val());
     });
     $(list).each(function () {
         $("<option />", {
